@@ -39,7 +39,7 @@ async function run() {
             console.log(newReview);
             const result = await reviewCollection.insertOne(newReview);
             res.send(result);
-        })
+        });
 
 
         // Send a ping to confirm a successful connection
