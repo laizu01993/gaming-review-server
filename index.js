@@ -11,8 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.tye2x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 
@@ -33,12 +31,25 @@ async function run() {
 
 
         const reviewCollection = client.db('reviewDB').collection('review')
-        // to get review data in mongodb
+
+        // CRUD Operations:
+
+        // to create review data in mongodb
         app.post('/review', async(req, res)=>{
             const newReview = req.body;
             console.log(newReview);
             const result = await reviewCollection.insertOne(newReview);
             res.send(result);
+        });
+
+        // to read review data from backend
+        app.get('/review' , async(req, res) => {
+            const topGames = reviewCollection
+            .find()
+            .sort({rating: -1})
+            .limit(6);
+            const result = await topGames.toArray();
+            res.send (result);
         });
 
 
