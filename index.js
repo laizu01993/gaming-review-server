@@ -31,7 +31,8 @@ async function run() {
 
 
         const reviewCollection = client.db('reviewDB').collection('review');
-        const watchlistCollection = client.db('watchlistDB').collection('watchlist')
+
+        const watchlistCollection = client.db('watchlistDB').collection('watchlist');
 
         // CRUD Operations:
 
@@ -58,6 +59,13 @@ async function run() {
             const id = req.params.id;
             const query = {_id: new ObjectId(id)};
             const result = await reviewCollection.findOne(query);
+            res.send(result);
+        });
+
+        // to get watchlist from frontend
+        app.post('/watchlist', async(req, res) => {
+            const item = req.body;
+            const result = await watchlistCollection.insertOne(item);
             res.send(result);
         });
 
