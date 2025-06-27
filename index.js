@@ -30,7 +30,8 @@ async function run() {
         await client.connect();
 
 
-        const reviewCollection = client.db('reviewDB').collection('review')
+        const reviewCollection = client.db('reviewDB').collection('review');
+        const watchlistCollection = client.db('watchlistDB').collection('watchlist')
 
         // CRUD Operations:
 
