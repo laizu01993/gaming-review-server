@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require('dotenv').config();
-const { MongoClient, ServerApiVersion, MongoLoggableComponent } = require('mongodb');
+const { MongoClient, ServerApiVersion, MongoLoggableComponent, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -50,6 +50,14 @@ async function run() {
             .limit(6);
             const result = await topGames.toArray();
             res.send (result);
+        });
+
+        // get review details by id
+        app.get('/review/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)};
+            const result = await reviewCollection.findOne(query);
+            res.send(result);
         });
 
 
