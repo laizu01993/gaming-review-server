@@ -32,43 +32,62 @@ async function run() {
 
         const reviewCollection = client.db('reviewDB').collection('review');
 
-        const watchlistCollection = client.db('watchlistDB').collection('watchlist');
+        const watchlistCollection = client.db('reviewDB').collection('watchlist');
+
+        const userCollection = client.db('reviewDB').collection('users');
 
         // CRUD Operations:
 
         // to create review data in mongodb
-        app.post('/review', async(req, res)=>{
+        app.post('/review', async (req, res) => {
             const newReview = req.body;
             console.log(newReview);
             const result = await reviewCollection.insertOne(newReview);
             res.send(result);
         });
 
-        // to read review data from backend
-        app.get('/review' , async(req, res) => {
+        // to read 6 review data from backend
+        app.get('/topReview', async (req, res) => {
             const topGames = reviewCollection
-            .find()
-            .sort({rating: -1})
-            .limit(6);
+                .find()
+                .sort({ rating: -1 })
+                .limit(6);
             const result = await topGames.toArray();
-            res.send (result);
+            res.send(result);
+        });
+        
+        // to read all review data from backend
+        app.get('/review', async (req, res) => {
+            const allReviews = reviewCollection.find();
+            const result = await allReviews.toArray();
+            res.send(result);
         });
 
         // get review details by id
-        app.get('/review/:id', async(req, res) => {
+        app.get('/review/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await reviewCollection.findOne(query);
             res.send(result);
         });
 
         // to get watchlist from frontend
-        app.post('/watchlist', async(req, res) => {
+        app.post('/watchlist', async (req, res) => {
             const item = req.body;
             const result = await watchlistCollection.insertOne(item);
             res.send(result);
         });
 
+        
+
+        // users related API (create user)
+        app.post('/users', async (req, res) => {
+            const newUser = req.body;
+            console.log(newUser);
+            const result = await userCollection.insertOne(newUser);
+            res.send(result);
+        
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
