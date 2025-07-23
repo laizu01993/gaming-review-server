@@ -55,7 +55,7 @@ async function run() {
             const result = await topGames.toArray();
             res.send(result);
         });
-        
+
         // to read all review data from backend
         app.get('/review', async (req, res) => {
             const allReviews = reviewCollection.find();
@@ -71,6 +71,25 @@ async function run() {
             res.send(result);
         });
 
+        // get reviews for a specific user by email
+        app.get('/myReviews', async (req, res) => {
+            const email = req.query.email;
+            if (!email) {
+                return res.status(400).send({ message: "Email query parameter is required" });
+            }
+            const query = { user_email: email }
+            const result = await reviewCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        // to delete my reviews
+        app.delete('/review/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)}
+            const result = await reviewCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // to get watchlist from frontend
         app.post('/watchlist', async (req, res) => {
             const item = req.body;
@@ -78,7 +97,7 @@ async function run() {
             res.send(result);
         });
 
-        
+
 
         // users related API (create user)
         app.post('/users', async (req, res) => {
@@ -86,7 +105,15 @@ async function run() {
             console.log(newUser);
             const result = await userCollection.insertOne(newUser);
             res.send(result);
-        
+
+        });
+
+        // Read users
+
+        app.get('/users', async (req, res) => {
+            const cursor = userCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
         });
 
         // Send a ping to confirm a successful connection
