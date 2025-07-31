@@ -63,7 +63,7 @@ async function run() {
             res.send(result);
         });
 
-        // get review details by id
+        // get review details by id / and also use for update
         app.get('/review/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -82,10 +82,33 @@ async function run() {
             res.send(result);
         })
 
-        // to delete my reviews
-        app.delete('/review/:id', async(req, res) => {
+        // update reviews(put)
+
+        app.put('/review/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)}
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const updatedReview = req.body;
+            const review = {
+                $set: {
+                    gameImage: updatedReview.gameImage,
+                    title: updatedReview.title,
+                    description: updatedReview.description,
+                    rating: updatedReview.rating,
+                    year: updatedReview.year,
+                    genre: updatedReview.genre,
+                    user_email: updatedReview.user_email,
+                    user_name: updatedReview.user_name
+                }
+            }
+            const result = await reviewCollection.updateOne(filter, review, options);
+            res.send(result);
+        })
+
+        // to delete my reviews
+        app.delete('/review/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
             const result = await reviewCollection.deleteOne(query);
             res.send(result);
         })
@@ -96,6 +119,13 @@ async function run() {
             const result = await watchlistCollection.insertOne(item);
             res.send(result);
         });
+
+        app.get('/watchlist', async (req, res) => {
+            const email = req.query.email;
+            const query = { user_email: email }
+            const result = await watchlistCollection.find(query).toArray();
+            res.send(result);
+        })
 
 
 
