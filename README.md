@@ -47,3 +47,4 @@ This is the backend server for the **Gaming Review** application. It handles API
 
 ## Environment Variables
 Create a `.env` file in the root of your backend with:
+https://github.com/laizu01993/gaming-review-server.git
