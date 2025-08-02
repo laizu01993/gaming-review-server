@@ -47,4 +47,24 @@ This is the backend server for the **Gaming Review** application. It handles API
 
 ## Environment Variables
 Create a `.env` file in the root of your backend with:
-https://github.com/laizu01993/gaming-review-server.git
+PORT=5000
+DB_USER=yourMongoDBUsername
+DB_PASSWORD=yourMongoDBPassword
+
+
+
+---
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/laizu01993/gaming-review-server.git
+   cd gaming-review-server```
+
+
+npm install
+
+npm start
+
+
