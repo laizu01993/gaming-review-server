@@ -7,7 +7,17 @@ const port = process.env.PORT || 5000;
 
 
 // middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: [
+    "https://gaming-review-8cbf8.web.app", // Firebase Hosting
+    "https://gaming-review-8cbf8.firebaseapp.com", // Firebase alternative domain
+    "http://localhost:5173" // Local dev
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 

@@ -5,6 +5,13 @@ This is the backend server for the **Gaming Review** application. It handles API
 
 ---
 
+## Live Backend API
+**Base URL:** [https://your-backend-deploy-link.onrender.com](https://your-backend-deploy-link.onrender.com)
+
+
+---
+
+
 ## Features
 - **Game Reviews CRUD**: Add, read, update, and delete reviews.
 - **User Authentication Support**: Works with Firebase authentication (from frontend).
