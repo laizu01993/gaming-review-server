@@ -6,7 +6,7 @@ This is the backend server for the **Gaming Review** application. It handles API
 ---
 
 ## Live Backend API
-**Base URL:** [https://your-backend-deploy-link.onrender.com](https://your-backend-deploy-link.onrender.com)
+**Base URL:** [https://gaming-review-server.vercel.app/](https://gaming-review-server.vercel.app/)
 
 
 ---
